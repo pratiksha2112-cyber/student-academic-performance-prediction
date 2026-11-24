@@ -14,7 +14,7 @@ import joblib
 
 
 # Load student dataset
-df = pd.read_csv("dataset/student-mat.csv", sep=";")
+df = pd.read_csv("student-mat.csv", sep=";")
 
 # Display first five rows
 print(df.head())
