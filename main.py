@@ -434,43 +434,52 @@ print("\nPredicted Final Grade (G3):", predicted_grade[0])
 # USER INPUT PREDICTION
 
 print("\n===== STUDENT ACADEMIC PERFORMANCE PREDICTION =====")
+age = st.number_input(
+    "Enter Age:",
+    min_value=15,
+    max_value=25,
+    value=18,
+    step=1
+)
+# Numerical Inputs (Streamlit widgets)
+Medu = st.number_input("Mother's Education (0-4):", min_value=0, max_value=4, value=2, step=1)
+Fedu = st.number_input("Father's Education (0-4):", min_value=0, max_value=4, value=2, step=1)
+traveltime = st.number_input("Travel Time (1-4):", min_value=1, max_value=4, value=1, step=1)
+studytime = st.number_input("Study Time (1-4):", min_value=1, max_value=4, value=2, step=1)
+failures = st.number_input("Past Failures (0-4):", min_value=0, max_value=4, value=0, step=1)
+famrel = st.number_input("Family Relationship (1-5):", min_value=1, max_value=5, value=4, step=1)
+freetime = st.number_input("Free Time (1-5):", min_value=1, max_value=5, value=3, step=1)
+goout = st.number_input("Going Out (1-5):", min_value=1, max_value=5, value=2, step=1)
+Dalc = st.number_input("Workday Alcohol Consumption (1-5):", min_value=1, max_value=5, value=1, step=1)
+Walc = st.number_input("Weekend Alcohol Consumption (1-5):", min_value=1, max_value=5, value=1, step=1)
+health = st.number_input("Health Status (1-5):", min_value=1, max_value=5, value=3, step=1)
+absences = st.number_input("Number of Absences:", min_value=0, max_value=100, value=0, step=1)
+G1 = st.number_input("First Period Grade (0-20):", min_value=0, max_value=20, value=10, step=1)
+G2 = st.number_input("Second Period Grade (0-20):", min_value=0, max_value=20, value=10, step=1)
 
-age = int(input("Enter Age: "))
-Medu = int(input("Mother's Education (0-4): "))
-Fedu = int(input("Father's Education (0-4): "))
-traveltime = int(input("Travel Time (1-4): "))
-studytime = int(input("Study Time (1-4): "))
-failures = int(input("Past Failures (0-4): "))
-famrel = int(input("Family Relationship (1-5): "))
-freetime = int(input("Free Time (1-5): "))
-goout = int(input("Going Out (1-5): "))
-Dalc = int(input("Workday Alcohol Consumption (1-5): "))
-Walc = int(input("Weekend Alcohol Consumption (1-5): "))
-health = int(input("Health Status (1-5): "))
-absences = int(input("Number of Absences: "))
-G1 = int(input("First Period Grade (0-20): "))
-G2 = int(input("Second Period Grade (0-20): "))
+# Categorical Inputs (Streamlit dropdowns)
+school = st.selectbox("School:", ["GP", "MS"])
+sex = st.selectbox("Sex:", ["F", "M"])
+address = st.selectbox("Address:", ["U", "R"])
+famsize = st.selectbox("Family Size:", ["LE3", "GT3"])
+Pstatus = st.selectbox("Parent Status:", ["T", "A"])
 
-# Categorical Inputs
-school = input("School (GP/MS): ").upper()
-sex = input("Sex (F/M): ").upper()
-address = input("Address (U/R): ").upper()
-famsize = input("Family Size (LE3/GT3): ").upper()
-Pstatus = input("Parent Status (T/A): ").upper()
+Mjob = st.selectbox("Mother's Job:", ["teacher", "health", "services", "other", "at_home"])
+Fjob = st.selectbox("Father's Job:", ["teacher", "health", "services", "other", "at_home"])
+reason = st.selectbox("Reason for Choosing School:", ["home", "reputation", "course", "other"])
+guardian = st.selectbox("Guardian:", ["mother", "father", "other"])
 
-Mjob = input("Mother's Job (teacher/health/services/other/at_home): ").lower()
-Fjob = input("Father's Job (teacher/health/services/other/at_home): ").lower()
-reason = input("Reason for Choosing School (home/reputation/course/other): ").lower()
-guardian = input("Guardian (mother/father/other): ").lower()
+schoolsup = st.selectbox("Extra Educational Support:", ["yes", "no"])
+famsup = st.selectbox("Family Educational Support:", ["yes", "no"])
+paid = st.selectbox("Extra Paid Classes:", ["yes", "no"])
+activities = st.selectbox("Extra Activities:", ["yes", "no"])
+nursery = st.selectbox("Attended Nursery School:", ["yes", "no"])
+higher = st.selectbox("Wants Higher Education:", ["yes", "no"])
+internet = st.selectbox("Internet Access:", ["yes", "no"])
+romantic = st.selectbox("In a Romantic Relationship:", ["yes", "no"])
 
-schoolsup = input("Extra Educational Support (yes/no): ").lower()
-famsup = input("Family Educational Support (yes/no): ").lower()
-paid = input("Extra Paid Classes (yes/no): ").lower()
-activities = input("Extra Activities (yes/no): ").lower()
-nursery = input("Attended Nursery School (yes/no): ").lower()
-higher = input("Wants Higher Education (yes/no): ").lower()
-internet = input("Internet Access (yes/no): ").lower()
-romantic = input("In a Romantic Relationship (yes/no): ").lower()
+
+
 
 # Create input dictionary
 user_data = {
