@@ -525,57 +525,86 @@ user_data = {
 }
 
 # Convert into DataFrame
+
+# CREATE USER DATAFRAME
 user_df = pd.DataFrame([user_data])
 
 # Arrange columns in training order
 user_df = user_df.reindex(columns=X.columns, fill_value=0)
 
-# Predict Grade
-predicted_grade = loaded_model.predict(user_df)
+# PREDICTION BUTTON
+if st.button("Predict Student Performance", type="primary"):
 
-print("\n===== PREDICTION RESULT =====")
-print("Predicted Final Grade (G3):", round(predicted_grade[0], 2), "/ 20")
+    # Predict Grade
+    predicted_grade = loaded_model.predict(user_df)
+    grade = float(predicted_grade[0])
 
+    # Performance Category
+    if grade >= 16:
+        category = "Excellent"
+    elif grade >= 12:
+        category = "Good"
+    elif grade >= 10:
+        category = "Average"
+    elif grade >= 8:
+        category = "Needs Improvement"
+    else:
+        category = "Poor"
 
-print("\n===== FINAL MODEL EVALUATION =====")
-print("MAE:", mean_absolute_error(y_test, final_predictions))
-print("MSE:", mean_squared_error(y_test, final_predictions))
-print("RMSE:", np.sqrt(mean_squared_error(y_test, final_predictions)))
-print("R2 Score:", r2_score(y_test, final_predictions))
+    # DISPLAY PREDICTION RESULT
+    st.title("Student Performance Report")
 
-grade = predicted_grade[0]
+    st.metric(
+        "Predicted Final Grade",
+        f"{grade:.2f} / 20"
+    )
 
-if grade >= 16:
-    category = "Excellent"
-elif grade >= 12:
-    category = "Good"
-elif grade >= 10:
-    category = "Average"
-elif grade >= 8:
-    category = "Needs Improvement"
-else:
-    category = "Poor"
+    st.success(f"Performance Category: {category}")
 
-print("\n===== STUDENT PERFORMANCE REPORT =====")
-print("Predicted Final Grade:", round(grade, 2), "/ 20")
-print("Performance Category:", category)
+    # MODEL EVALUATION
+    st.subheader("Model Evaluation")
 
-print("\n===== STUDENT PERFORMANCE ANALYSIS =====")
+    col1, col2 = st.columns(2)
 
-if studytime <= 2:
-    print("Suggestion: Increase daily study time.")
+    with col1:
+        st.metric(
+            "MAE",
+            round(mean_absolute_error(y_test, final_predictions), 2)
+        )
 
-if absences > 10:
-    print("Suggestion: Improve class attendance.")
+        st.metric(
+            "RMSE",
+            round(np.sqrt(mean_squared_error(y_test, final_predictions)), 2)
+        )
 
-if failures > 0:
-    print("Suggestion: Focus on previously difficult subjects.")
+    with col2:
+        st.metric(
+            "MSE",
+            round(mean_squared_error(y_test, final_predictions), 2)
+        )
 
-if G2 < 10:
-    print("Suggestion: Improve performance in previous term.")
+        st.metric(
+            "R2 Score",
+            round(r2_score(y_test, final_predictions), 2)
+        )
 
-if G1 >= 10 and G2 >= 10:
-    print("Observation: Student has maintained passing grades.")
+    # STUDENT PERFORMANCE ANALYSIS
+    st.subheader("Student Performance Analysis")
 
-if studytime > 2 and absences <= 10 and failures == 0:
-    print("Observation: Student shows positive academic indicators.")
+    if studytime <= 2:
+        st.warning("Suggestion: Increase daily study time.")
+
+    if absences > 10:
+        st.warning("Suggestion: Improve class attendance.")
+
+    if failures > 0:
+        st.warning("Suggestion: Focus on previously difficult subjects.")
+
+    if G2 < 10:
+        st.warning("Suggestion: Improve performance in previous term.")
+
+    if G1 >= 10 and G2 >= 10:
+        st.info("Observation: Student has maintained passing grades.")
+
+    if studytime > 2 and absences <= 10 and failures == 0:
+        st.success("Observation: Student shows positive academic indicators.")
